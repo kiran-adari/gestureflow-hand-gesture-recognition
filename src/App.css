@@ -1,0 +1,191 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  background: #090d18;
+  color: #f8fafc;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 30px;
+  color: #38bdf8;
+}
+
+.header p {
+  margin: 6px 0 0;
+  color: #94a3b8;
+}
+
+.status-badge {
+  background: #1e293b;
+  border: 1px solid #334155;
+  padding: 10px 16px;
+  border-radius: 30px;
+  color: #4ade80;
+}
+
+.workspace {
+  position: relative;
+  flex: 1;
+  min-height: 560px;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid #334155;
+  background:
+    radial-gradient(circle at center, #1e293b, #0f172a);
+}
+
+.instructions {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  right: 24px;
+  pointer-events: none;
+}
+
+.instructions h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+.instructions p {
+  max-width: 470px;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+.draggable-box {
+  position: absolute;
+  width: 160px;
+  height: 120px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  box-shadow: 0 12px 35px #0005;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.draggable-box.dragging {
+  box-shadow: 0 0 30px #38bdf888;
+  border: 2px solid #67e8f9;
+}
+
+.box-icon {
+  font-size: 30px;
+}
+
+.draggable-box small {
+  opacity: 0.8;
+}
+
+.virtual-cursor {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 3px solid #38bdf8;
+  border-radius: 50%;
+  background: #38bdf855;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10;
+  box-shadow: 0 0 15px #38bdf8;
+}
+
+.cursor-dragging {
+  border-color: #4ade80;
+  background: #4ade8077;
+  box-shadow: 0 0 20px #4ade80;
+}
+
+.camera-panel {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 280px;
+  z-index: 5;
+  background: #020617;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 8px;
+}
+
+.camera-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.camera-container video,
+.camera-container canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(-1);
+}
+
+.camera-container canvas {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.camera-status {
+  margin: 8px 0 2px;
+  text-align: center;
+  font-size: 12px;
+  color: #4ade80;
+}
+
+footer {
+  text-align: center;
+  color: #64748b;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .app {
+    padding: 12px;
+  }
+
+  .workspace {
+    min-height: 650px;
+  }
+
+  .camera-panel {
+    width: 180px;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .instructions h2 {
+    font-size: 18px;
+  }
+}
