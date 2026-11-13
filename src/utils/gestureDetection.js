@@ -1,25 +1,43 @@
 
-export function distance(a, b) {
-  return Math.hypot(a.x - b.x, a.y - b.y);
-}
+export function recognizeGesture(landmarks) {
+  if (!landmarks || landmarks.length < 21) return null;
 
-export function isPinching(landmarks, wasPinching = false) {
+  const distance = (a, b) =>
+    Math.hypot(a.x - b.x, a.y - b.y);
+
+  const wrist = landmarks[0];
   const thumb = landmarks[4];
   const index = landmarks[8];
 
-  const palmWidth = distance(landmarks[5], landmarks[17]);
-  const pinchDistance = distance(thumb, index);
+  const palmSize = Math.max(
+    distance(wrist, landmarks[9]),
+    0.001
+  );
 
-  const ratio = pinchDistance / Math.max(palmWidth, 0.001);
+  const pinchRatio = distance(thumb, index) / palmSize;
 
-  return wasPinching ? ratio < 0.55 : ratio < 0.35;
-}
+  const extended = [
+    [8, 6],
+    [12, 10],
+    [16, 14],
+    [20, 18],
+  ].filter(([tip, joint]) =>
+    distance(landmarks[tip], wrist) >
+    distance(landmarks[joint], wrist) * 1.12
+  ).length;
 
-export function getCursorPosition(landmarks, width, height) {
-  const indexTip = landmarks[8];
+  let gesture = "neutral";
+
+  if (pinchRatio < 0.38) {
+    gesture = "pinch";
+  } else if (extended >= 3) {
+    gesture = "open";
+  }
 
   return {
-    x: (1 - indexTip.x) * width,
-    y: indexTip.y * height,
+    gesture,
+    x: 1 - index.x,
+    y: index.y,
+    pinchRatio,
   };
 }
